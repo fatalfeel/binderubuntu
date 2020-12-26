@@ -10,15 +10,17 @@ Test on Ubuntu 16.04 pass at 2020-12-25
 
 (2) Compile and debug projects in Eclipse
 
-2a. ~\binderubuntu\driver\ashmem
+a. ~\binderubuntu\driver\ashmem
 
-2b. ~\binderubuntu\driver\binder
+b. ~\binderubuntu\driver\binder
 
-2c. ~\binderubuntu\libs
+c. ~\binderubuntu\libs
 
-2d. ~\binderubuntu\servicemanager
+d. ~\binderubuntu\servicemanager
 
-2e. ~\binderubuntu\test
+e. ~\binderubuntu\test_client
+
+f. ~\binderubuntu\test_server
 
 #
 
