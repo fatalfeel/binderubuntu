@@ -4,7 +4,7 @@ Test on Ubuntu 16.04 pass at 2020-12-25
 
 (1) Build in command line:
 
-./project.sh makeall
+./project.sh build
 
 #
 
