@@ -6,7 +6,7 @@ case ${cmd} in
         sh -c 'cd driver/binder && make -j4'
         sh -c 'cd driver/ashmem && make -j4'
         sh -c 'cd libs && make -j4'
-		sh -c 'cd servicemanager && make -j4'
+        sh -c 'cd servicemanager && make -j4'
         sh -c 'cd test && make -j4'
         ;;  
     clean)
