@@ -1,6 +1,6 @@
 binder on Ubuntu
 ================
-Test on Ubuntu 16.04 pass 2020-12-25
+Test on Ubuntu 16.04 pass at 2020-12-25
 
 Your can compile and debug projects in Eclipse
 
