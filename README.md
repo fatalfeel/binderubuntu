@@ -8,7 +8,7 @@ Test on Ubuntu 16.04 pass at 2020-12-25
 
 #
 
-(2) Compile and debug projects in Eclipse
+(2) Compile and debug projects in Eclipse (option)
 
 a. ~\binderubuntu\driver\ashmem
 
