@@ -14,7 +14,7 @@ Your can compile and debug projects in Eclipse
 
 5. ~\binderubuntu\test
 
-Install Anbox can substutite projects ashmem and binder
+Install Anbox can substutite drivers ashmem and binder
 
 https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbox
 
