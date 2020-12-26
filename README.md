@@ -6,6 +6,8 @@ Test on Ubuntu 16.04 pass at 2020-12-25
 
 ./project.sh makeall
 
+
+
 2.Your can compile and debug projects in Eclipse
 
 a. ~\binderubuntu\driver\ashmem
@@ -18,9 +20,13 @@ d. ~\binderubuntu\servicemanager
 
 e. ~\binderubuntu\test
 
+
+
 3.Install Anbox can substutite driver/ashmem and driver/binder
 
 https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbox
+
+
 
 Refer to:
 1. https://github.com/hungys/binder-for-linux
