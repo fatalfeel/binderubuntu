@@ -28,6 +28,16 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
 #
 
+(4) Run
+
+~/binderubuntu/servicemanager/servicemanager
+
+~/binderubuntu/test_server/test_server
+
+~/binderubuntu/test_client/test_client
+
+#
+
 Refer to
 1. https://github.com/hungys/binder-for-linux
 2. https://github.com/anbox/anbox-modules
