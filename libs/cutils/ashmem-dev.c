@@ -29,7 +29,7 @@
 
 typedef unsigned int __u32;
 
-#include <driver/ashmem/uapi_ashmem.h>
+#include <driver/ashmem/uapi/ashmem.h>
 #include <cutils/ashmem.h>
 #include "strlcpy.h"
 
