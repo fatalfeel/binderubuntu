@@ -5,7 +5,7 @@ binder_linux-y := deps.o binder.o
 KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
 
 all:
-	$(MAKE) -C $(KERNEL_SRC) V=0 M=$$PWD
+	$(MAKE) -C $(KERNEL_SRC) V=1 M=$$PWD
 
 install:
 	cp binder_linux.ko $(DESTDIR)/

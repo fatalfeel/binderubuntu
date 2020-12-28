@@ -9,7 +9,7 @@ ccflags-y += -DVZKERNEL
 endif
 
 all:
-	$(MAKE) -C $(KERNEL_SRC) V=0 M=$$PWD
+	$(MAKE) -C $(KERNEL_SRC) V=1 M=$$PWD
 
 install:
 	cp ashmem_linux.ko $(DESTDIR)/
