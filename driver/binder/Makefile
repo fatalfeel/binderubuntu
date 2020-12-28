@@ -11,4 +11,4 @@ install:
 	cp binder_linux.ko $(DESTDIR)/
 
 clean:
-	rm -rf deps.h *.o *.ko *.mod.c *.symvers *.order .*.cmd .tmp_versions
+	rm -rf deps.h *.a *.o *.ko *.mod *.mod.c *.symvers *.order .*.cmd .tmp_versions
