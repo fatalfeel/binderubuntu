@@ -6,6 +6,8 @@ Test on Ubuntu 16.04 pass at 2020-12-25
 
 ./project.sh build
 
+./project.sh insmod
+
 #
 
 (2) Compile and debug projects in Eclipse (option)
@@ -21,6 +23,8 @@ d. ~\binderubuntu\servicemanager
 e. ~\binderubuntu\test_client
 
 f. ~\binderubuntu\test_server
+
+./project.sh insmod
 
 #
 
