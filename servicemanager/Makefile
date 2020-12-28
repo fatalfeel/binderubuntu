@@ -7,5 +7,5 @@ clean:
 	rm -f *.o servicemanager
 	
 %.o: %.c
-	#gcc -I.. $(CFLAGS) -c -o $@ $<
-	gcc -O0 -g -I.. $(CFLAGS) -c -o $@ $<
+	gcc -O3 -I.. $(CFLAGS) -c -o $@ $<
+	#gcc -O0 -g -I.. $(CFLAGS) -c -o $@ $<

@@ -1,4 +1,4 @@
-ccflags-y += -I$(src) -Wno-error=implicit-int -Wno-int-conversion
+ccflags-y += -O3 -I$(src) -Wno-error=implicit-int -Wno-int-conversion
 obj-m := ashmem_linux.o
 ashmem_linux-y := deps.o ashmem.o
 
