@@ -2,7 +2,12 @@ SUBDIRS := driver/ashmem driver/binder libs servicemanager test_client test_serv
 
 .PHONY: all clean
 
-all clean:
+all:
 	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir -f Makefile $@; \
+		$(MAKE) -C $$dir; \
+	done
+
+clean:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir -f Makefile clean; \
 	done
