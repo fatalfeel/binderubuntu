@@ -1,4 +1,4 @@
-ccflags-y += -O3 -I$(src) -Wno-int-conversion -DCONFIG_ANDROID_BINDER_DEVICES="\"binder\""
+ccflags-y += -O3 -I$(src) -Wno-int-conversion -DCONFIG_ANDROID_BINDER_DEVICES=\"binder\"
 obj-m := binder_linux.o
 binder_linux-y := deps.o binder.o
 
