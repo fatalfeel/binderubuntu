@@ -24,7 +24,7 @@ f. ~\binderubuntu\test_server
 
 #
 
-(3) Install Anbox can substitute driver/ashmem and driver/binder
+(3) Install Anbox can substitute driver/ashmem and driver/binder (option)
 
 https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbox
 
