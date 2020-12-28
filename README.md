@@ -4,7 +4,7 @@ Test pass on Ubuntu 16.04/18.04 at 2020-12-25
 
 (1) Build in command line:
 
-./project.sh build
+make
 
 ./project.sh insmod
 
