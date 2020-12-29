@@ -1,7 +1,5 @@
 SUBDIRS := driver/ashmem driver/binder libs servicemanager test_client test_server
 
-.PHONY: all clean
-
 all:
 	@for dir in $(SUBDIRS); do \
 		$(MAKE) -j8 -C $$dir -f Makefile all; \
@@ -13,3 +11,5 @@ clean:
 		$(MAKE) -j8 -C $$dir -f Makefile clean; \
 		echo clean $$dir done; echo; \
 	done
+
+.PHONY: all clean
