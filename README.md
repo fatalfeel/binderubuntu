@@ -44,7 +44,7 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
 #
 
-PS: After insmod if show follows
+ps: After insmod if show follows
 
 binder_linux.ko: Required key not availabel
 
