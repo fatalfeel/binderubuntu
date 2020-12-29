@@ -44,13 +44,13 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
 #
 
-After insmod if show follows
+After insmod if show follows:
 
 binder_linux.ko: Required key not availabel
 
 ashmem_linux.ko: Required key not availabel
 
-Goto BIOS setting and disable [Secure Boot] of UEFI
+Get in BIOS setting and disable [Secure Boot] of UEFI
 
 #
 
