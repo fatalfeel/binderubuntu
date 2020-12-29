@@ -44,6 +44,16 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
 #
 
+After insmod if show follows
+
+binder_linux.ko: Required key not availabel
+
+ashmem_linux.ko: Required key not availabel
+
+Goto BIOS setting and disable [Secure Boot] of UEFI
+
+#
+
 Refer to
 1. https://github.com/hungys/binder-for-linux
 2. https://github.com/anbox/anbox-modules
