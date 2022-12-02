@@ -42,6 +42,7 @@ static inline SchedPolicy _policy(SchedPolicy p)
 #include <pthread.h>
 #include <linux/sched.h>
 #include <sys/prctl.h>
+#include "cutils/threads.h"
 
 #define POLICY_DEBUG 0
 
