@@ -30,8 +30,10 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 (5) Note
     
     (b) When compile error: passing argument 1 of ‘security_binder_transaction’
-          modify binder.c
-          KERNEL_VERSION(4, 0, 0) -> KERNEL_VERSION(9, 9, 9)
+           because /usr/src/linux-headers-5.4.0-132-generic/include/linux/security.h
+           int security_binder_transfer_binder(const struct cred *from, const struct cred *to);
+           modify binder.c
+           #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0) -> #if 0
     
     (a) After insmod show follows
           binder_linux.ko: Required key not availabel
