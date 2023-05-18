@@ -17,6 +17,7 @@ binder_sources := \
 	MemoryHeapBase.cpp \
 	Parcel.cpp \
 	PermissionCache.cpp \
+	IProcessInfoService.cpp \
 	ProcessInfoService.cpp \
 	ProcessState.cpp \
 	Static.cpp \

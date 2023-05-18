@@ -25,8 +25,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-#ifndef ANDROID_CUTILS_ATOMIC_X86_64_H
-#define ANDROID_CUTILS_ATOMIC_X86_64_H
+/*
+x64    https://android.googlesource.com/platform/system/core/+/0a72d2930adcd3b3504448f71b25ebb88c2cc3cf/include/cutils/atomic-x86.h
+arm64  https://android.googlesource.com/platform/system/core/+/0a72d2930adcd3b3504448f71b25ebb88c2cc3cf/include/cutils/atomic-aarch64.h
+*/
+#ifndef ANDROID_CUTILS_ATOMIC_H
+#define ANDROID_CUTILS_ATOMIC_H
 #include <stdint.h>
 #ifndef ANDROID_ATOMIC_INLINE
 #define ANDROID_ATOMIC_INLINE inline __attribute__((always_inline))
@@ -39,7 +43,19 @@ void android_compiler_barrier(void)
 extern ANDROID_ATOMIC_INLINE
 void android_memory_barrier(void)
 {
-    __asm__ __volatile__ ("mfence" : : : "memory");
+#if defined(__x86_64__)
+	/*define ANDROID_SMP 0 single cpu using*/
+	//android_compiler_barrier();
+
+	/*multi cpus using*/
+	__asm__ __volatile__ ("mfence" : : : "memory");
+#else
+	/*define ANDROID_SMP 0 single cpu using*/
+	//android_compiler_barrier();
+
+	/*multi cpus using*/
+	__asm__ __volatile__ ("dmb ish" : : : "memory");
+#endif
 }
 extern ANDROID_ATOMIC_INLINE
 int32_t android_atomic_acquire_load(volatile const int32_t *ptr)
@@ -70,12 +86,17 @@ extern ANDROID_ATOMIC_INLINE
 int android_atomic_cas(int32_t old_value, int32_t new_value,
                        volatile int32_t *ptr)
 {
-    int32_t prev;
+#if defined(__x86_64__)
+	int32_t prev;
     __asm__ __volatile__ ("lock; cmpxchgl %1, %2"
                           : "=a" (prev)
                           : "q" (new_value), "m" (*ptr), "0" (old_value)
                           : "memory");
     return prev != old_value;
+#else
+    return __sync_val_compare_and_swap(ptr, old_value, new_value) != old_value;
+#endif
+
 }
 extern ANDROID_ATOMIC_INLINE
 int android_atomic_acquire_cas(int32_t old_value, int32_t new_value,
@@ -94,11 +115,21 @@ int android_atomic_release_cas(int32_t old_value, int32_t new_value,
 extern ANDROID_ATOMIC_INLINE
 int32_t android_atomic_add(int32_t increment, volatile int32_t *ptr)
 {
+#if defined(__x86_64__)
     __asm__ __volatile__ ("lock; xaddl %0, %1"
                           : "+r" (increment), "+m" (*ptr)
                           : : "memory");
     /* increment now holds the old value of *ptr */
     return increment;
+#else
+    int32_t prev, status;
+    android_memory_barrier();
+    do {
+        prev = *ptr;
+        status = android_atomic_cas(prev, prev + increment, ptr);
+    } while (__builtin_expect(status != 0, 0));
+    return prev;
+#endif
 }
 extern ANDROID_ATOMIC_INLINE
 int32_t android_atomic_inc(volatile int32_t *addr)

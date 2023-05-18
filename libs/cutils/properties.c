@@ -112,24 +112,27 @@ int32_t property_get_int32(const char *key, int32_t default_value) {
 //     return __system_property_set(key, value);
 // }
 
-// int property_get(const char *key, char *value, const char *default_value)
-// {
-//     int len;
+int property_get(const char *key, char *value, const char *default_value)
+{
+    int len;
 
-//     len = __system_property_get(key, value);
-//     if(len > 0) {
-//         return len;
-//     }
-//     if(default_value) {
-//         len = strlen(default_value);
-//         if (len >= PROPERTY_VALUE_MAX) {
-//             len = PROPERTY_VALUE_MAX - 1;
-//         }
-//         memcpy(value, default_value, len);
-//         value[len] = '\0';
-//     }
-//     return len;
-// }
+#if defined(_REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_)
+    len = __system_property_get(key, value);
+    if(len > 0) {
+        return len;
+    }
+#endif
+
+    if(default_value) {
+        len = strlen(default_value);
+        if (len >= PROPERTY_VALUE_MAX) {
+            len = PROPERTY_VALUE_MAX - 1;
+        }
+        memcpy(value, default_value, len);
+        value[len] = '\0';
+    }
+    return len;
+}
 
 // struct property_list_callback_data
 // {

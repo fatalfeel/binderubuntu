@@ -1,6 +1,5 @@
 cutils_sources := \
 	ashmem-dev.c \
-	ashmem-host.c \
 	atomic.c \
 	native_handle.c \
 	process_name.c \
