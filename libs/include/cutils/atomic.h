@@ -44,13 +44,13 @@ extern ANDROID_ATOMIC_INLINE
 void android_memory_barrier(void)
 {
 #if defined(__x86_64__)
-	/*define ANDROID_SMP 0 single cpu using*/
+	/*define ANDROID_SMP 0 for single cpu using*/
 	//android_compiler_barrier();
 
 	/*multi cpus using*/
 	__asm__ __volatile__ ("mfence" : : : "memory");
 #else
-	/*define ANDROID_SMP 0 single cpu using*/
+	/*define ANDROID_SMP 0 for single cpu using*/
 	//android_compiler_barrier();
 
 	/*multi cpus using*/
