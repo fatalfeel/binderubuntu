@@ -39,6 +39,17 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
           binder_linux.ko: Required key not availabel
           ashmem_linux.ko: Required key not availabel
           go to BIOS setting and disable [Secure Boot] of UEFI
+          
+(6) build libs and servicemanager run in x86_64 or arm64 embedded system
+
+    If have your own embedded system driver, you can build & run libs, servicemanager, test_client, test_server. Modify defconfig as follows.
+    CONFIG_ANDROID=y
+    CONFIG_ANDROID_BINDER_IPC=y
+    CONFIG_ANDROID_BINDER_IPC_32BIT=n
+    CONFIG_ANDROID_BINDERFS=n
+    CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
+    CONFIG_ANDROID_BINDER_IPC_SELFTEST=n
+    CONFIG_ASHMEM=y
 
 Refer to
 1. https://github.com/hungys/binder-for-linux
