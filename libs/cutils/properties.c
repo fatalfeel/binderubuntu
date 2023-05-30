@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/*
+https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/libcutils/properties.c
+https://android.googlesource.com/platform/system/core/+/refs/tags/android-9.0.0_r61/libcutils/properties.cpp
+*/
+
 #define LOG_TAG "properties"
 // #define LOG_NDEBUG 0
 
@@ -114,20 +119,24 @@ int32_t property_get_int32(const char *key, int32_t default_value) {
 
 int property_get(const char *key, char *value, const char *default_value)
 {
-    int len;
+    int len = 0;
 
 #if defined(_REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_)
     len = __system_property_get(key, value);
-    if(len > 0) {
+    if (len > 0) {
         return len;
     }
 #endif
 
-    if(default_value) {
-        len = strlen(default_value);
-        if (len >= PROPERTY_VALUE_MAX) {
-            len = PROPERTY_VALUE_MAX - 1;
-        }
+    if (default_value) {
+        /* android-5.0.0 */
+//      len = strlen(default_value);
+//      if (len >= PROPERTY_VALUE_MAX) {
+//          len = PROPERTY_VALUE_MAX - 1;
+//      }
+
+        /* android-9.0.0 */
+        len = strnlen(default_value, PROPERTY_VALUE_MAX - 1);
         memcpy(value, default_value, len);
         value[len] = '\0';
     }

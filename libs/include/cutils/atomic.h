@@ -25,10 +25,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
+
 /*
-x64    https://android.googlesource.com/platform/system/core/+/0a72d2930adcd3b3504448f71b25ebb88c2cc3cf/include/cutils/atomic-x86.h
-arm64  https://android.googlesource.com/platform/system/core/+/0a72d2930adcd3b3504448f71b25ebb88c2cc3cf/include/cutils/atomic-aarch64.h
+x64    https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/include/cutils/atomic-x86_64.h
+arm64  https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/include/cutils/atomic-arm64.h
 */
+
 #ifndef ANDROID_CUTILS_ATOMIC_H
 #define ANDROID_CUTILS_ATOMIC_H
 #include <stdint.h>
