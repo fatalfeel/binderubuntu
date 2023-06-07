@@ -1,6 +1,10 @@
 /* Copyright 2008 The Android Open Source Project
  */
 
+/*
+refer to: https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-9.0.0_r19/cmds/servicemanager/service_manager.c
+*/
+
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
