@@ -27,8 +27,9 @@
  */
 
 /*
-x64    https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/include/cutils/atomic-x86_64.h
-arm64  https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/include/cutils/atomic-arm64.h
+https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.1.1_r38/include/cutils/atomic-inline.h
+x64    https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.1.1_r38/include/cutils/atomic-x86_64.h
+arm64  https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.1.1_r38/include/cutils/atomic-arm64.h
 */
 
 #ifndef ANDROID_CUTILS_ATOMIC_H
