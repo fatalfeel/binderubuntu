@@ -15,6 +15,7 @@
  */
 
 /*
+Refer
 https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/libcutils/properties.c
 https://android.googlesource.com/platform/system/core/+/refs/tags/android-9.0.0_r61/libcutils/properties.cpp
 */
