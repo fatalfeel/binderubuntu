@@ -44,7 +44,7 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
     If have your own embedded system driver, you can build & run libs, servicemanager, test_client, test_server.
     To enable binder driver modify defconfig as follows.
-    CONFIG_ASHMEM=y #not in linux 5.18.1 above
+    CONFIG_ASHMEM=y #not support after linux 5.18.1 and use CONFIG_MEMFD_CREATE=y
     CONFIG_ANDROID=y
     CONFIG_ANDROID_BINDER_IPC=y
     CONFIG_ANDROID_BINDER_IPC_32BIT=n
@@ -55,3 +55,4 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 Refer to
 1. https://github.com/hungys/binder-for-linux
 2. https://github.com/anbox/anbox-modules
+3. https://github.com/choff/anbox-modules
