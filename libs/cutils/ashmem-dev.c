@@ -126,8 +126,7 @@ int ashmem_unpin_region(int fd, size_t offset, size_t len)
 
 int ashmem_get_size_region(int fd)
 {
-    //if (has_memfd_support() && !memfd_is_ashmem(fd))
-    //{
+    //if (has_memfd_support() && !memfd_is_ashmem(fd)) {
         struct stat sb;
 
         if (fstat(fd, &sb) == -1) {

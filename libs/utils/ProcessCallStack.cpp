@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/*
+Refer
+https://android.googlesource.com/platform/system/core/+/refs/tags/android-10.0.0_r1/libutils/ProcessCallStack.cpp
+*/
+
 #define LOG_TAG "ProcessCallStack"
 // #define LOG_NDEBUG 0
 
@@ -131,7 +136,7 @@ void ProcessCallStack::clear() {
 void ProcessCallStack::update() {
     DIR *dp;
     struct dirent *ep;
-    struct dirent entry;
+    //struct dirent entry;
 
     dp = opendir(PATH_SELF_TASK);
     if (dp == NULL) {
@@ -158,8 +163,9 @@ void ProcessCallStack::update() {
      * Each tid is a directory inside of /proc/self/task
      * - Read every file in directory => get every tid
      */
-    int code;
-    while ((code = readdir_r(dp, &entry, &ep)) == 0 && ep != NULL) {
+    //int code;
+    //while ((code = readdir_r(dp, &entry, &ep)) == 0 && ep != NULL) {
+    while ((ep = readdir(dp)) != NULL) {
         pid_t tid = -1;
         sscanf(ep->d_name, "%d", &tid);
 
@@ -194,10 +200,9 @@ void ProcessCallStack::update() {
         ALOGV("%s: Got call stack for tid %d (size %zu)",
               __FUNCTION__, tid, threadInfo.callStack.size());
     }
-    if (code != 0) { // returns positive error value on error
-        ALOGE("%s: Failed to readdir from %s (errno = %d, '%s')",
-              __FUNCTION__, PATH_SELF_TASK, -code, strerror(code));
-    }
+    //if (code != 0) { // returns positive error value on error
+    //    ALOGE("%s: Failed to readdir from %s (errno = %d, '%s')", __FUNCTION__, PATH_SELF_TASK, -code, strerror(code));
+    //}
 #endif
 
     closedir(dp);
