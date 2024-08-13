@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 /*
  * Copyright (C) 2008 Google, Inc.
  *
@@ -16,6 +17,11 @@
  * GNU General Public License for more details.
  *
  */
+
+/*
+Refer
+linux-4.0.x/include/uapi/linux/android/binder.h
+*/
 
 #ifndef _UAPI_LINUX_BINDER_H
 #define _UAPI_LINUX_BINDER_H
