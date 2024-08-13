@@ -1,4 +1,4 @@
-binder_sources := \
+binder_sources = \
 	AppOpsManager.cpp \
 	Binder.cpp \
 	BpBinder.cpp \

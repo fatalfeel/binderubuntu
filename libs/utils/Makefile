@@ -1,4 +1,4 @@
-utils_sources := \
+utils_sources = \
 	BasicHashtable.cpp \
 	BlobCache.cpp \
 	CallStack.cpp \

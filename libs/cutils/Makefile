@@ -1,4 +1,4 @@
-cutils_sources := \
+cutils_sources = \
 	ashmem-dev.c \
 	atomic.c \
 	native_handle.c \

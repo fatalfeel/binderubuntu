@@ -33,7 +33,7 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="binder_driver_binder.null.2126848394" name="binder_driver_binder"/>
+		<project id="driver_binder.null.2126848394" name="driver_binder"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
