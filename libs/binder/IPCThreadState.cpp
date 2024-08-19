@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/*
+Refer
+https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-14.0.0_r61/libs/binder/IPCThreadState.cpp
+*/
+
 #define LOG_TAG "IPCThreadState"
 
 #include <binder/IPCThreadState.h>
@@ -72,10 +77,10 @@ static const void* printCommand(TextOutput& out, const void* _cmd);
 
 // Static const and functions will be optimized out if not used,
 // when LOG_NDEBUG and references in IF_LOG_COMMANDS() are optimized out.
-static const char *kReturnStrings[] = {
+static const char* kReturnStrings[] = {
     "BR_ERROR",
     "BR_OK",
-    "BR_TRANSACTION",
+    "BR_TRANSACTION/BR_TRANSACTION_SEC_CTX",
     "BR_REPLY",
     "BR_ACQUIRE_RESULT",
     "BR_DEAD_REPLY",
@@ -90,10 +95,13 @@ static const char *kReturnStrings[] = {
     "BR_FINISHED",
     "BR_DEAD_BINDER",
     "BR_CLEAR_DEATH_NOTIFICATION_DONE",
-    "BR_FAILED_REPLY"
+    "BR_FAILED_REPLY",
+    "BR_FROZEN_REPLY",
+    "BR_ONEWAY_SPAM_SUSPECT",
+    "BR_TRANSACTION_PENDING_FROZEN"
 };
 
-static const char *kCommandStrings[] = {
+static const char* kCommandStrings[] = {
     "BC_TRANSACTION",
     "BC_REPLY",
     "BC_ACQUIRE_RESULT",
@@ -140,6 +148,17 @@ static const void* printBinderTransactionData(TextOutput& out, const void* data)
     return btd+1;
 }
 
+/*static const void* printBinderTransactionDataSecCtx(TextOutput& out, const void* data) {
+    const binder_transaction_data_secctx* btd = (const binder_transaction_data_secctx*)data;
+
+    printBinderTransactionData(out, &btd->transaction_data);
+
+    char* secctx = (char*)btd->secctx;
+    out << "\tsecctx=" << secctx << "\n";
+
+    return btd+1;
+}*/
+
 static const void* printReturnCommand(TextOutput& out, const void* _cmd)
 {
     static const size_t N = sizeof(kReturnStrings)/sizeof(kReturnStrings[0]);
@@ -156,10 +175,15 @@ static const void* printReturnCommand(TextOutput& out, const void* _cmd)
     out << kReturnStrings[cmdIndex];
     
     switch (code) {
+        /*case BR_TRANSACTION_SEC_CTX: {
+            out << ": ";
+            cmd = (const int32_t*)printBinderTransactionDataSecCtx(out, cmd);
+        } break;*/
+
         case BR_TRANSACTION:
         case BR_REPLY: {
             out << ": " << indent;
-            cmd = (const int32_t *)printBinderTransactionData(out, cmd);
+            cmd = (const int32_t*)printBinderTransactionData(out, cmd);
             out << dedent;
         } break;
         
@@ -732,10 +756,18 @@ status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)
         }
 
         switch (cmd) {
+        case BR_ONEWAY_SPAM_SUSPECT:
+            //ALOGE("Process seems to be sending too many oneway calls.");
+            //CallStack::logStack("oneway spamming", CallStack::getCurrent().get(), ANDROID_LOG_ERROR);
+            [[fallthrough]];
         case BR_TRANSACTION_COMPLETE:
             if (!reply && !acquireResult) goto finish;
             break;
-        
+
+        case BR_TRANSACTION_PENDING_FROZEN:
+            //ALOGW("Sending oneway calls to frozen process.");
+            goto finish;
+
         case BR_DEAD_REPLY:
             err = DEAD_OBJECT;
             goto finish;
@@ -743,7 +775,11 @@ status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)
         case BR_FAILED_REPLY:
             err = FAILED_TRANSACTION;
             goto finish;
-        
+
+        case BR_FROZEN_REPLY:
+            err = FAILED_TRANSACTION;
+            goto finish;
+
         case BR_ACQUIRE_RESULT:
             {
                 ALOG_ASSERT(acquireResult != NULL, "Unexpected brACQUIRE_RESULT");
@@ -958,10 +994,10 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
     case BR_ERROR:
         result = mIn.readInt32();
         break;
-        
+
     case BR_OK:
         break;
-        
+
     case BR_ACQUIRE:
         refs = (RefBase::weakref_type*)mIn.readPointer();
         obj = (BBinder*)mIn.readPointer();
@@ -977,7 +1013,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         mOut.writePointer((uintptr_t)refs);
         mOut.writePointer((uintptr_t)obj);
         break;
-        
+
     case BR_RELEASE:
         refs = (RefBase::weakref_type*)mIn.readPointer();
         obj = (BBinder*)mIn.readPointer();
@@ -990,7 +1026,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         }
         mPendingStrongDerefs.push(obj);
         break;
-        
+
     case BR_INCREFS:
         refs = (RefBase::weakref_type*)mIn.readPointer();
         obj = (BBinder*)mIn.readPointer();
@@ -999,7 +1035,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         mOut.writePointer((uintptr_t)refs);
         mOut.writePointer((uintptr_t)obj);
         break;
-        
+
     case BR_DECREFS:
         refs = (RefBase::weakref_type*)mIn.readPointer();
         obj = (BBinder*)mIn.readPointer();
@@ -1011,7 +1047,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         //           refs, obj, refs->refBase());
         mPendingWeakDerefs.push(refs);
         break;
-        
+
     case BR_ATTEMPT_ACQUIRE:
         refs = (RefBase::weakref_type*)mIn.readPointer();
         obj = (BBinder*)mIn.readPointer();
@@ -1026,7 +1062,8 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
             mOut.writeInt32((int32_t)success);
         }
         break;
-    
+
+    //case BR_TRANSACTION_SEC_CTX:
     case BR_TRANSACTION:
         {
             binder_transaction_data tr;
@@ -1034,14 +1071,14 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
             ALOG_ASSERT(result == NO_ERROR,
                 "Not enough command data for brTRANSACTION");
             if (result != NO_ERROR) break;
-            
+
             Parcel buffer;
             buffer.ipcSetDataReference(
                 reinterpret_cast<const uint8_t*>(tr.data.ptr.buffer),
                 tr.data_size,
                 reinterpret_cast<const binder_size_t*>(tr.data.ptr.offsets),
                 tr.offsets_size/sizeof(binder_size_t), freeBuffer, this);
-            
+
             const pid_t origPid = mCallingPid;
             const uid_t origUid = mCallingUid;
             const int32_t origStrictModePolicy = mStrictModePolicy;
@@ -1104,7 +1141,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
 
             //ALOGI("<<<< TRANSACT from pid %d restore pid %d uid %d\n",
             //     mCallingPid, origPid, origUid);
-            
+
             if ((tr.flags & TF_ONE_WAY) == 0) {
                 LOG_ONEWAY("Sending reply to %d!", mCallingPid);
                 if (error < NO_ERROR) reply.setError(error);
@@ -1112,7 +1149,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
             } else {
                 LOG_ONEWAY("NOT sending reply to %d!", mCallingPid);
             }
-            
+
             mCallingPid = origPid;
             mCallingUid = origUid;
             mStrictModePolicy = origStrictModePolicy;
@@ -1123,10 +1160,10 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
                 alog << "BC_REPLY thr " << (void*)pthread_self() << " / obj "
                     << tr.target.ptr << ": " << indent << reply << dedent << endl;
             }
-            
+
         }
         break;
-    
+
     case BR_DEAD_BINDER:
         {
             BpBinder *proxy = (BpBinder*)mIn.readPointer();
@@ -1134,24 +1171,24 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
             mOut.writeInt32(BC_DEAD_BINDER_DONE);
             mOut.writePointer((uintptr_t)proxy);
         } break;
-        
+
     case BR_CLEAR_DEATH_NOTIFICATION_DONE:
         {
             BpBinder *proxy = (BpBinder*)mIn.readPointer();
             proxy->getWeakRefs()->decWeak(proxy);
         } break;
-        
+
     case BR_FINISHED:
         result = TIMED_OUT;
         break;
-        
+
     case BR_NOOP:
         break;
-        
+
     case BR_SPAWN_LOOPER:
         mProcess->spawnPooledThread(false);
         break;
-        
+
     default:
         printf("*** BAD COMMAND %d received from Binder driver\n", cmd);
         result = UNKNOWN_ERROR;
