@@ -38,8 +38,6 @@ https://android.googlesource.com/platform/system/core/+/refs/tags/android-10.0.0
 #include <linux/memfd.h>
 #include <linux/version.h>
 
-typedef unsigned int __u32;
-
 #include <driver/ashmem/uapi/ashmem.h>
 #include <cutils/ashmem.h>
 #include "strlcpy.h"
