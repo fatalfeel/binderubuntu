@@ -79,13 +79,9 @@ static int memfd_create_region(const char* name, size_t size)
  */
 int ashmem_create_region(const char *name, size_t size)
 {
-	int fd;
-
     //if (has_memfd_support()) {
         return memfd_create_region(name ? name : "none", size);
     //}
-
-	return fd;
 }
 
 static int memfd_set_prot_region(int fd, int prot)
