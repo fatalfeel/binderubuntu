@@ -1,11 +1,15 @@
-all: servicemanager 
+TARGET = servicemanager
 
-servicemanager: binder.o service_manager.o
-	gcc -o $@ $^
+CFLAGS = -I.. -O3
+#CFLAGS = -I.. -O0 -g
+
+%.o: %.c
+	gcc -c $(CFLAGS) $< -o $@
+
+$(TARGET): binder.o service_manager.o
+	gcc $^ -o $@
+
+all: $(TARGET)
 
 clean:
-	rm -f *.o servicemanager
-	
-%.o: %.c
-	gcc -O3 -I.. $(CFLAGS) -c -o $@ $<
-	#gcc -O0 -g -I.. $(CFLAGS) -c -o $@ $<
+	rm -f *.o $(TARGET)
