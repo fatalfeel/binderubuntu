@@ -16,6 +16,7 @@
 
 /*
 Refer
+https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-7.0.0_r31/libs/binder/IPCThreadState.cpp
 https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-14.0.0_r61/libs/binder/IPCThreadState.cpp
 */
 
@@ -600,13 +601,13 @@ status_t IPCThreadState::transact(int32_t handle,
     }
     
     if ((flags & TF_ONE_WAY) == 0) {
-        #if 0
+#if 0
         if (code == 4) { // relayout
             ALOGI(">>>>>> CALLING transaction 4");
         } else {
             ALOGI(">>>>>> CALLING transaction %d", code);
         }
-        #endif
+#endif
         if (reply) {
             err = waitForResponse(reply);
         } else {
