@@ -1,4 +1,4 @@
-binder on Ubuntu
+binder on Ubuntu/Arm64
 ================
 Test pass on Ubuntu 16.04/18.04 at 2020-12-25
 
@@ -44,7 +44,7 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 
     If have your own embedded system driver, you can build & run libs, servicemanager, test_client, test_server.
     To enable binder driver modify defconfig as follows.
-    CONFIG_ASHMEM=y #not support after linux 5.18.1 and use CONFIG_MEMFD_CREATE=y
+    CONFIG_ASHMEM=y #after linux 5.18.1 not support ASHMEM, change to use CONFIG_MEMFD_CREATE=y
     CONFIG_ANDROID=y
     CONFIG_ANDROID_BINDER_IPC=y
     CONFIG_ANDROID_BINDER_IPC_32BIT=n
