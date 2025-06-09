@@ -15,6 +15,11 @@
  *
  */
 
+/*
+Refer
+https://elixir.bootlin.com/linux/v4.13.16/source/drivers/android/binder.c
+*/
+
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #include <asm/cacheflush.h>
