@@ -43,7 +43,7 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
 (6) build libs servicemanager test_client test_server on x86_64/arm64 embedded system
 
     If you have embedded system linux driver, you can build libs, servicemanager, test_client, test_server.
-    To enable binder driver modify defconfig as follows:
+    To enable binder driver modify linux defconfig as follows:
     CONFIG_ASHMEM=y #if linux version after 5.18.1 disable this, use CONFIG_MEMFD_CREATE=y instead
     CONFIG_ANDROID=y
     CONFIG_ANDROID_BINDER_IPC=y
@@ -51,6 +51,8 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
     CONFIG_ANDROID_BINDERFS=n
     CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder"
     CONFIG_ANDROID_BINDER_IPC_SELFTEST=n
+
+    Modify all Makefile to fit your cross compile then build.
 
 Refer to
 1. https://github.com/hungys/binder-for-linux
