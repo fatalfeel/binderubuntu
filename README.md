@@ -40,11 +40,11 @@ https://computingforgeeks.com/how-to-run-android-applications-on-linux-with-anbo
           ashmem_linux.ko: Required key not availabel
           go to BIOS setting and disable [Secure Boot] of UEFI
           
-(6) build libs and servicemanager run in x86_64 or arm64 embedded system
+(6) build libs servicemanager test_client test_server on x86_64/arm64 embedded system
 
-    If have your own embedded system driver, you can build & run libs, servicemanager, test_client, test_server.
-    To enable binder driver modify defconfig as follows.
-    CONFIG_ASHMEM=y #after linux 5.18.1 not support ASHMEM, change to use CONFIG_MEMFD_CREATE=y
+    If you have embedded system linux driver, you can build libs, servicemanager, test_client, test_server.
+    To enable binder driver modify defconfig as follows:
+    CONFIG_ASHMEM=y #if linux version after 5.18.1 disable this, use CONFIG_MEMFD_CREATE=y instead
     CONFIG_ANDROID=y
     CONFIG_ANDROID_BINDER_IPC=y
     CONFIG_ANDROID_BINDER_IPC_32BIT=n
