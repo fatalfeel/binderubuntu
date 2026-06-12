@@ -177,7 +177,7 @@ static const void* printReturnCommand(TextOutput& out, const void* _cmd)
     
     switch (code) {
         /*case BR_TRANSACTION_SEC_CTX: { //adb shell cat log using
-        	out << ": " << indent;
+            out << ": " << indent;
             cmd = (const int32_t*)printBinderTransactionDataSecCtx(out, cmd);
             out << dedent;
         } break;*/
