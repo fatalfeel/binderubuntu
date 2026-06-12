@@ -18,6 +18,8 @@
 Refer
 https://android.googlesource.com/platform/system/core/+/refs/tags/android-5.0.0_r7/libcutils/properties.c
 https://android.googlesource.com/platform/system/core/+/refs/tags/android-9.0.0_r61/libcutils/properties.cpp
+https://android.googlesource.com/platform/bionic/+/refs/tags/android-9.0.0_r61/libc/include/sys/_system_properties.h
+https://android.googlesource.com/platform/bionic/+/refs/tags/android-9.0.0_r61/libc/include/sys/system_properties.h
 */
 
 #define LOG_TAG "properties"
