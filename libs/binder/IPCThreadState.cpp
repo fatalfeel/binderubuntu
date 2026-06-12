@@ -176,9 +176,10 @@ static const void* printReturnCommand(TextOutput& out, const void* _cmd)
     out << kReturnStrings[cmdIndex];
     
     switch (code) {
-        /*case BR_TRANSACTION_SEC_CTX: {
-            out << ": ";
+        /*case BR_TRANSACTION_SEC_CTX: { //adb shell cat log using
+        	out << ": " << indent;
             cmd = (const int32_t*)printBinderTransactionDataSecCtx(out, cmd);
+            out << dedent;
         } break;*/
 
         case BR_TRANSACTION:
@@ -1064,7 +1065,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         }
         break;
 
-    //case BR_TRANSACTION_SEC_CTX:
+    //case BR_TRANSACTION_SEC_CTX: //SELinux and mCallingSid(securityId) using
     case BR_TRANSACTION:
         {
             binder_transaction_data tr;
