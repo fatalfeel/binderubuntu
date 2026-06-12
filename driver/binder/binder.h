@@ -20,7 +20,7 @@
 
 /*
 Refer
-linux-6.6.x/include/uapi/linux/android/binder.h
+https://elixir.bootlin.com/linux/v6.6.10/source/include/uapi/linux/android/binder.h
 */
 
 #ifndef _UAPI_LINUX_BINDER_H
@@ -556,4 +556,3 @@ enum binder_driver_command_protocol {
 };
 
 #endif /* _UAPI_LINUX_BINDER_H */
-
