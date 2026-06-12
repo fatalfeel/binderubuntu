@@ -761,7 +761,7 @@ status_t IPCThreadState::waitForResponse(Parcel *reply, status_t *acquireResult)
         case BR_ONEWAY_SPAM_SUSPECT:
             //ALOGE("Process seems to be sending too many oneway calls.");
             //CallStack::logStack("oneway spamming", CallStack::getCurrent().get(), ANDROID_LOG_ERROR);
-            [[fallthrough]];
+            [[fallthrough]]; //tell the compiler fell down on purpose
         case BR_TRANSACTION_COMPLETE:
             if (!reply && !acquireResult) goto finish;
             break;
@@ -1065,7 +1065,7 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
         }
         break;
 
-    //case BR_TRANSACTION_SEC_CTX: //SELinux and mCallingSid(securityId) using
+    //case BR_TRANSACTION_SEC_CTX: //CONFIG_SECURITY_SELINUX=y mCallingSid(securityID) using
     case BR_TRANSACTION:
         {
             binder_transaction_data tr;
@@ -1082,11 +1082,13 @@ status_t IPCThreadState::executeCommand(int32_t cmd)
                 tr.offsets_size/sizeof(binder_size_t), freeBuffer, this);
 
             const pid_t origPid = mCallingPid;
+            //const char* origSid = mCallingSid;
             const uid_t origUid = mCallingUid;
             const int32_t origStrictModePolicy = mStrictModePolicy;
             const int32_t origTransactionBinderFlags = mLastTransactionBinderFlags;
 
             mCallingPid = tr.sender_pid;
+            //mCallingSid = reinterpret_cast<const char*>(tr_secctx.secctx);
             mCallingUid = tr.sender_euid;
             mLastTransactionBinderFlags = tr.flags;
 
