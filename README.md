@@ -1,4 +1,4 @@
-binder on Ubuntu and arm64/x64 embedded Linux v5 above
+binder on Ubuntu and arm64/x64 embedded Linux
 ================
 Test pass on Ubuntu 16.04/18.04 at 2020-12-25
 
